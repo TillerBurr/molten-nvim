@@ -171,6 +171,7 @@ variable, their values, and a brief description.
 | `g:molten_output_win_hide_on_leave`           | (`true`) \| `false`                                         | After leaving the output window (via `:q` or switching windows), do not attempt to redraw the output window |
 | `g:molten_output_win_max_height`              | (`999999`) \| int                                           | Max height of the output window |
 | `g:molten_output_win_max_width`               | (`999999`) \| int                                           | Max width of the output window |
+| `g:molten_output_win_offset`                  | (0) \| int                                                  | Offset to display the output window. Negative values shift up and positive shift down|
 | `g:molten_output_win_style`                   | (`false`) \| `"minimal"`                                    | Value passed to the `style` option in `:h nvim_open_win()` |
 | `g:molten_save_path`                          | (`stdpath("data").."/molten"`) \| any path to a folder      | Where to save/load data with `:MoltenSave` and `:MoltenLoad` |
 | `g:molten_use_border_highlights`              | `true` \| (`false`)                                         | When true, uses different highlights for output border depending on the state of the cell (running, done, error). see [highlights](#highlights) |

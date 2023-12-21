@@ -9,7 +9,8 @@ from molten.options import MoltenOptions
 from molten.position import DynamicPosition, Position
 from molten.utils import notify_error
 
-
+from loguru import logger
+logger.add("/home/tbaur/molten.log")
 class OutputBuffer:
     nvim: Nvim
     canvas: Canvas
@@ -181,9 +182,10 @@ class OutputBuffer:
         win = self.nvim.current.window
         win_info = self.nvim.funcs.getwininfo(win.handle)[0]
         win_col = win_info["wincol"]
-        win_row = anchor.lineno
+        win_row = anchor.lineno + self.options.output_win_offset
         win_width = win_info["width"] - win_info["textoff"]
         win_height = win_info["height"]
+        logger.warning(f"{win_row=}")
 
         if self.options.virt_lines_off_by_1:
             win_row += 1
@@ -217,6 +219,7 @@ class OutputBuffer:
         win = self.nvim.current.window
         win_col = win.col
         win_row = self._buffer_to_window_lineno(anchor.lineno + 1)
+        win_row += self.options.output_win_offset
         if win_row == 0:  # anchor position is off screen
             return
         win_width = win.width
@@ -242,7 +245,6 @@ class OutputBuffer:
             win_height,
         )
         lines, real_height = self.build_output_text(shape, self.display_buf.number, False)
-
         # You can't append lines normally, there will be a blank line at the top
         self.display_buf[0] = lines[0]
         self.display_buf.append(lines[1:])
